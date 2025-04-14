@@ -1,0 +1,22 @@
+/* Transaction List Styles */
+.transaction-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .transaction-item.expense {
+    color: red; /* Color for expenses */
+  }
+  
+  .transaction-item.income {
+    color: green; /* Color for income */
+  }
+  
+  .transaction-item span {
+    font-size: 16px;
+  }
+  
