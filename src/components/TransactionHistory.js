@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { TransactionContext } from "../contexts/TransactionContext";
+import "./TransactionHistory.css";
 
 const TransactionHistory = () => {
   const { transactions } = useContext(TransactionContext);
@@ -37,62 +38,54 @@ const TransactionHistory = () => {
     <div className="transaction-history">
       <h2>Transaction History</h2>
 
-      <div className="controls">
-        <label>
-          Sort by: 
-          <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
+      <div className="transaction-filters">
+        <div className="filter-group">
+          <label htmlFor="sortType">Sort by:</label>
+          <select 
+            id="sortType"
+            value={sortType} 
+            onChange={(e) => setSortType(e.target.value)}
+          >
             <option value="date">Date</option>
             <option value="amount">Amount</option>
             <option value="category">Category</option>
           </select>
-        </label>
-        <label>
-          Filter by Category:
+        </div>
+
+        <div className="filter-group">
+          <label htmlFor="filterCategory">Filter by Category:</label>
           <input
+            id="filterCategory"
             type="text"
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
             placeholder="Enter category"
           />
-        </label>
+        </div>
       </div>
 
       {transactions.length === 0 ? (
         <p>No transactions to display. Add some transactions to get started!</p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left", padding: "0.5rem", borderBottom: "1px solid #ddd" }}>Type</th>
-              <th style={{ textAlign: "left", padding: "0.5rem", borderBottom: "1px solid #ddd" }}>Description</th>
-              <th style={{ textAlign: "right", padding: "0.5rem", borderBottom: "1px solid #ddd" }}>Amount</th>
-              <th style={{ textAlign: "left", padding: "0.5rem", borderBottom: "1px solid #ddd" }}>Category</th>
-              <th style={{ textAlign: "left", padding: "0.5rem", borderBottom: "1px solid #ddd" }}>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTransactions.map((transaction) => (
-              <tr key={transaction.id}>
-                <td style={{ padding: "0.5rem", borderBottom: "1px solid #eee" }}>{transaction.type}</td>
-                <td style={{ padding: "0.5rem", borderBottom: "1px solid #eee" }}>{transaction.description}</td>
-                <td 
-                  style={{ 
-                    padding: "0.5rem", 
-                    borderBottom: "1px solid #eee", 
-                    color: transaction.type === "expense" ? "red" : "green",
-                    textAlign: "right"
-                  }}
-                >
-                  ${Math.abs(transaction.amount).toFixed(2)}
-                </td>
-                <td style={{ padding: "0.5rem", borderBottom: "1px solid #eee" }}>{transaction.category}</td>
-                <td style={{ padding: "0.5rem", borderBottom: "1px solid #eee" }}>
-                  {transaction.date ? new Date(transaction.date).toLocaleDateString() : "N/A"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="transaction-list">
+          {filteredTransactions.map((transaction) => (
+            <div key={transaction.id} className="transaction-item">
+              <div className="transaction-info">
+                <h4>{transaction.description}</h4>
+                <p>
+                  {transaction.category} • {transaction.date ? new Date(transaction.date).toLocaleDateString() : "N/A"}
+                </p>
+              </div>
+              <div className={`transaction-amount ${transaction.type}`}>
+                ${Math.abs(transaction.amount).toFixed(2)}
+              </div>
+              <div className="transaction-actions">
+                <button className="edit-btn">Edit</button>
+                <button className="delete-btn">Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

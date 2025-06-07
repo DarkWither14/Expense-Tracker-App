@@ -1,0 +1,124 @@
+.notification-manager {
+  background: var(--section-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification-item {
+  background: var(--bg-primary);
+  padding: 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid var(--border-color);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.notification-content p {
+  margin: 5px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9em;
+}
+
+.notification-time {
+  color: var(--text-secondary);
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 15px;
+}
+
+.notification-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.notification-actions button:hover {
+  color: var(--accent-color);
+}
+
+.notification-actions button.delete:hover {
+  color: var(--danger-color);
+}
+
+.notification-item.unread {
+  border-left: 4px solid var(--accent-color);
+}
+
+.notification-item.important {
+  border-left: 4px solid var(--warning-color);
+}
+
+.notification-item.urgent {
+  border-left: 4px solid var(--danger-color);
+}
+
+.notification-settings {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.notification-settings h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.settings-group {
+  margin-bottom: 15px;
+}
+
+.settings-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.settings-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .notification-item {
+    flex-direction: column;
+  }
+  
+  .notification-actions {
+    margin: 10px 0 0 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+} 

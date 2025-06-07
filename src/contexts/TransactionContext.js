@@ -1,25 +1,40 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 
 export const TransactionContext = createContext();
 
 export const TransactionProvider = ({ children }) => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    const savedTransactions = localStorage.getItem("transactions");
+    return savedTransactions ? JSON.parse(savedTransactions) : [];
+  });
 
-  const addTransaction = (transaction) => {
-    const newTransaction = {
-      ...transaction,
-      id: Date.now(),
-      amount: transaction.type === "expense" ? -Math.abs(transaction.amount) : Math.abs(transaction.amount)
-    };
-    setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
-  };
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
-  const getBalance = () => {
+  const addTransaction = useCallback((transaction) => {
+    setTransactions((prevTransactions) => [
+      ...prevTransactions,
+      { ...transaction, id: Date.now() },
+    ]);
+  }, []);
+
+  const deleteTransaction = useCallback((id) => {
+    setTransactions((prevTransactions) =>
+      prevTransactions.filter((transaction) => transaction.id !== id)
+    );
+  }, []);
+
+  const importTransactions = useCallback((newTransactions) => {
+    setTransactions(newTransactions);
+  }, []);
+
+  const getBalance = useCallback(() => {
     return transactions.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2);
-  };
+  }, [transactions]);
 
   // Function to handle recurring transactions
-  const processRecurringTransactions = () => {
+  const processRecurringTransactions = useCallback(() => {
     const today = new Date().toISOString().split('T')[0];
     transactions.forEach(transaction => {
       if (transaction.isRecurring && transaction.nextDate === today) {
@@ -52,17 +67,25 @@ export const TransactionProvider = ({ children }) => {
         transaction.nextDate = nextDate.toISOString().split('T')[0];
       }
     });
-  };
+  }, [transactions, addTransaction]);
 
   // Check for recurring transactions daily
   useEffect(() => {
     processRecurringTransactions();
     const interval = setInterval(processRecurringTransactions, 24 * 60 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [transactions]);
+  }, [processRecurringTransactions]);
 
   return (
-    <TransactionContext.Provider value={{ transactions, addTransaction, getBalance }}>
+    <TransactionContext.Provider
+      value={{
+        transactions,
+        addTransaction,
+        deleteTransaction,
+        importTransactions,
+        getBalance,
+      }}
+    >
       {children}
     </TransactionContext.Provider>
   );

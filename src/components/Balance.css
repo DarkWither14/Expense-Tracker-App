@@ -1,0 +1,55 @@
+.balance-container {
+  background: var(--section-bg);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.balance-title {
+  color: var(--text-primary);
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.balance-amount {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0;
+  color: #7c4dff !important; /* Modern vibrant purple */
+}
+
+.balance-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.income, .expenses {
+  flex: 1;
+  text-align: center;
+}
+
+.income h4, .expenses h4 {
+  margin: 0;
+  color: var(--section-text-secondary);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.income p, .expenses p {
+  margin: 5px 0 0 0;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.income p {
+  color: #00c853; /* Modern vibrant green */
+}
+
+.expenses p {
+  color: #ff5252; /* Modern vibrant red */
+} 

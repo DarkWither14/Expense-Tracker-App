@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
 import { TransactionContext } from "../contexts/TransactionContext";
+import { LocaleContext } from "../contexts/LocaleContext";
+import "./AddTransaction.css";
 
 const categories = ["Food", "Transport", "Entertainment", "Utilities", "Miscellaneous"];
 
 const AddTransaction = () => {
   const { addTransaction } = useContext(TransactionContext);
+  const { t } = useContext(LocaleContext);
   const [type, setType] = useState("expense");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -19,7 +22,7 @@ const AddTransaction = () => {
       amount: parseFloat(amount), 
       category, 
       date,
-      id: Date.now() // Add unique ID for each transaction
+      id: Date.now()
     };
     addTransaction(newTransaction);
     setType("expense");
@@ -31,27 +34,33 @@ const AddTransaction = () => {
 
   return (
     <form onSubmit={handleSubmit} className="transaction-form">
-      <label>
-        Type:
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
+      <div className="form-group">
+        <label htmlFor="type">{t('type')}</label>
+        <select 
+          id="type"
+          value={type} 
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="expense">{t('expense')}</option>
+          <option value="income">{t('income')}</option>
         </select>
-      </label>
+      </div>
 
-      <label>
-        Description:
+      <div className="form-group">
+        <label htmlFor="description">{t('description')}</label>
         <input
+          id="description"
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-      </label>
+      </div>
 
-      <label>
-        Amount:
+      <div className="form-group">
+        <label htmlFor="amount">{t('amount')}</label>
         <input
+          id="amount"
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -59,35 +68,37 @@ const AddTransaction = () => {
           min="0"
           step="0.01"
         />
-      </label>
+      </div>
 
-      <label>
-        Category:
+      <div className="form-group">
+        <label htmlFor="category">{t('category')}</label>
         <select
+          id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
         >
-          <option value="">Select Category</option>
+          <option value="">{t('selectCategory')}</option>
           {categories.map((cat) => (
             <option key={cat} value={cat}>
               {cat}
             </option>
           ))}
         </select>
-      </label>
+      </div>
 
-      <label>
-        Date:
+      <div className="form-group">
+        <label htmlFor="date">{t('date')}</label>
         <input
+          id="date"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
         />
-      </label>
+      </div>
 
-      <button type="submit">Add Transaction</button>
+      <button type="submit">{t('addTransaction')}</button>
     </form>
   );
 };

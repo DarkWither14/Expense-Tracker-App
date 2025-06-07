@@ -1,0 +1,136 @@
+.transaction-history {
+  background: var(--section-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.transaction-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1em;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transaction-item {
+  background: var(--bg-primary);
+  padding: 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-color);
+}
+
+.transaction-info {
+  flex: 1;
+}
+
+.transaction-info h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.transaction-info p {
+  margin: 5px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9em;
+}
+
+.transaction-amount {
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.transaction-amount.income {
+  color: var(--success-color);
+}
+
+.transaction-amount.expense {
+  color: var(--danger-color);
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 15px;
+}
+
+.transaction-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.transaction-actions button:hover {
+  color: var(--accent-color);
+}
+
+.transaction-actions button.delete:hover {
+  color: var(--danger-color);
+}
+
+@media (max-width: 768px) {
+  .transaction-filters {
+    flex-direction: column;
+  }
+  
+  .filter-group {
+    min-width: 100%;
+  }
+  
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .transaction-amount {
+    margin: 10px 0;
+  }
+  
+  .transaction-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+} 
